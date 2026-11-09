@@ -18,8 +18,13 @@ test('new users can register', function () {
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',
+        'role' => 'admin',
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(route('dashboard', absolute: false));
+    $response->assertRedirect(route('home', absolute: false));
+    $this->assertDatabaseHas('users', [
+        'email' => 'test@example.com',
+        'role' => 'organizer',
+    ]);
 });
